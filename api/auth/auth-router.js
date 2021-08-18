@@ -5,7 +5,8 @@ const bcrypt = require('bcryptjs')
 
 router.post('/register', checkUsernameFree, checkPasswordLength, async (req, res, next) => { //[POST] /api/auth/register
   const { username, password } = req.body
-  const hash = bcrypt.hashSync(password, 8)
+  const salt = bcrypt.genSaltSync(8);
+  const hash = bcrypt.hashSync(password, salt)
   const newUser = {
     username: username,
     password: hash
